@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import express, { Router, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import path from 'path';
 import runProcess from './process.js';
@@ -26,10 +26,8 @@ app.use(validateWebHook);
 // Middleware to parse JSON request bodies
 
 
-const devopsRouter = Router();
-
 // Deploy route
-devopsRouter.post("/webhooks", async (req: Request, res: Response) => {
+app.post("/webhooks", async (req: Request, res: Response) => {
     try {
 
         res.status(202).send('Accepted')
@@ -64,8 +62,6 @@ devopsRouter.post("/webhooks", async (req: Request, res: Response) => {
         console.log(error)
     }
 });
-
-app.use("/devops", devopsRouter);
 
 // Start the server
 app.listen(PORT, () => {
